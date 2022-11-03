@@ -3,6 +3,7 @@ from fastapi import status, HTTPException
 
 
 class UserRegisterRequest(BaseModel):
+    department_id: int
     name: constr()
     email: constr()
     phone_num: constr()

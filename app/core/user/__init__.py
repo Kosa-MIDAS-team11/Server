@@ -32,7 +32,7 @@ def user_register(request: UserRegisterRequest):
     with session_scope() as session:
         return duc_user_register(
             user_register_impl, session,
-            request.email, request.name, request.password, request.phone_num, False
+            request.department_id, request.email, request.name, request.password, request.phone_num, False
         )
 
 
