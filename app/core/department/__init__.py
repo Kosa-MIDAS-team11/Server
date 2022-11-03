@@ -29,7 +29,3 @@ def create_department(token: str = Depends(_oauth2_scheme)):
     with session_scope() as session:
         return duc_query_department_list(department_list_impl, session, token)
 
-
-@department_router.get('/')
-def aa():
-    return {200:'dfdf'}
