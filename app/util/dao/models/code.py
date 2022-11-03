@@ -7,4 +7,4 @@ class Code(Base):
 
     __tablename__ = 'code'
 
-    auth_code = Column(CHAR(15), primary_key=True)
+    auth_code = Column(CHAR(60), primary_key=True)
