@@ -1,14 +1,15 @@
+
 from contextlib import contextmanager
 
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, scoped_session
+from sqlalchemy.orm import sessionmaker, scoped_session, Session
 
 from app.config import DBConfig
 
 
 @contextmanager
-def session_scope():
+def session_scope() -> Session:
     engine = create_engine(
         url=DBConfig.URL,
         encoding="utf-8",
@@ -22,6 +23,7 @@ def session_scope():
     try:
         yield session
         session.commit()
+
     except:
         session.rollback()
         raise
