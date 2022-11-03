@@ -20,19 +20,22 @@ class CreateDepartmentImpl(CreateDepartmentService):
         if not is_admin:
             raise HTTPException(403, '올바르지 않은 역할입니다')
 
-        department_id = uuid4().bytes
+        if len(session.query(Department.department_id).all()) is 0:
+            department_id = 0
+        else:
+            department_id =session.query(Department.department_id).order_by(Department.department_id.desc()).limit(1).one()['department_id'] + 1
 
         department = self.__create_department(department_id, name, location)
 
-        my_department = self.__create_my_department(department_id, get_email(token))
+        my_department = self.__create_my_department(department.department_id, get_email(token))
 
         session.add(department)
         session.add(my_department)
 
     @staticmethod
-    def __create_department(_id, name, location):
+    def __create_department(department_id, name, location):
         return Department(
-            department_id=_id,
+            department_id=department_id,
             name=name,
             location=location
         )
