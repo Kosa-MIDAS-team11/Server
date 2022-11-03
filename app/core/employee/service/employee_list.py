@@ -20,19 +20,10 @@ class EmployListImpl(EmployeeListService):
             MyDepartment, User.email == MyDepartment.user_email
         ).all()
 
-        response = []
-        for i in user_list:
-            response.append(
-                {
-                    'department_id': i.department_id,
-                    'name': i.department_name,
-                    'email': i.email,
-                    'phone_num': i.phone_num
-                }
-            )
+
 
         return {
-            'employee_list': response
+            'employee_list': user_list
         }
 
 

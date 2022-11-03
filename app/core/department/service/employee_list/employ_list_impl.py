@@ -16,6 +16,7 @@ class EmployListImpl(EmployeeListService):
             raise HTTPException(403, "역할이 올바르지 않습니다!")
 
         user_list = session.query(User).select_from(User).join(MyDepartment.department_id == department_id).all()
+
         response = []
         for i in user_list:
             response.append(
@@ -25,9 +26,8 @@ class EmployListImpl(EmployeeListService):
                     'phone_num': i.phone_num
                 }
             )
-        return {
-            'employee_list': response
-        }
+
+        print(response)
 
 
 employ_list_impl = EmployListImpl()
