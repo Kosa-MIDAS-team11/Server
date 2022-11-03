@@ -29,6 +29,6 @@ class UserRegisterRequest(BaseModel):
 
     @validator('password')
     def check_password(cls, password):
-        if not 8 < len(password) < 15:
+        if not 8 <= len(password) <= 15:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='비밀번호는 8자 이상 15자 이하여야 합니다!')
         return password
