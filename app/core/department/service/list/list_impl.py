@@ -18,6 +18,7 @@ class DepartmentListImpl(DepartmentListService):
             raise HTTPException(403, '맞지 않은 역할입니다.')
 
         department_list = session.query(
+            Department.department_id,
             Department.department_name,
             Department.location
         ).all()
