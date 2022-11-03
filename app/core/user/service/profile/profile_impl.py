@@ -12,7 +12,7 @@ class UpdateUserProfileImpl(UpdateUserProfile):
         user = session.query(User).filter(User.email == get_email(token)).one()
 
         user.email = email
-        user.name = user.name if (not 2 <= len(name) <= 5) else name
+        user.department_name = user.department_name if (not 2 <= len(name) <= 5) else name
         user.phone_num = user.phone_num if len(phone_num) != 11 or phone_num[
                                                                    :3] != "010" or '-' in phone_num else phone_num
 
