@@ -10,19 +10,21 @@ class EmployListImpl(EmployeeListService):
 
     def execute(self, session: Session, token: str, department_id: int):
         user_list = session.query(
+            MyDepartment.department_id,
             User.name,
             User.email,
             User.phone_num
         ).select_from(
             User
         ).join(
-            MyDepartment, User.email == MyDepartment.user_email,
+            MyDepartment, User.email == MyDepartment.user_email
         ).all()
 
         response = []
         for i in user_list:
             response.append(
                 {
+                    'department_id': i.department_id,
                     'name': i.name,
                     'email': i.email,
                     'phone_num': i.phone_num

@@ -7,9 +7,11 @@ from app.util.dao import session_scope
 from app.core.admin.dto.request.register import AdminRegisterRequest
 from app.core.admin.dto.request.second_auth import SecondAuthRequest, UpdateSecondAuthRequest
 
+from app.core.admin.service.fire_user import duc_fire_user
 from app.core.admin.service.register import duc_admin_register
 from app.core.admin.service.second_auth import duc_second_auth_service, duc_update_second_auth_code_service
 
+from app.core.admin.service.fire_user.fire_user_impl import fire_user_impl
 from app.core.admin.service.register.register_impl import admin_register_impl
 from app.core.admin.service.second_auth.second_auth_impl import second_auth_service_impl
 from app.core.admin.service.second_auth.update_second_impl import update_second_auth_code_impl
@@ -39,9 +41,17 @@ def admin_second_auth(request: SecondAuthRequest):
 
 
 @admin_router.put('/second-auth')
-def update_second_auth_code(request: UpdateSecondAuthRequest,token: str = Depends(_oauth2_scheme)):
+def update_second_auth_code(request: UpdateSecondAuthRequest, token: str = Depends(_oauth2_scheme)):
     with session_scope() as session:
         return duc_update_second_auth_code_service(
             update_second_auth_code_impl, session,
             token, request.auth_code, request.new_auth_code
+        )
+
+
+@admin_router.delete('/{user_email}')
+def fire_user(user_email, token: str = Depends(_oauth2_scheme)):
+    with session_scope() as session:
+        duc_fire_user(
+            fire_user_impl, session, token, user_email
         )
