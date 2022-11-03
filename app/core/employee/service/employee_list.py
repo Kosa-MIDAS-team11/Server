@@ -9,15 +9,29 @@ from app.core.employee.service import EmployeeListService
 class EmployListImpl(EmployeeListService):
 
     def execute(self, session: Session, token: str, department_id: int):
-        return session.query(
+        user_list = session.query(
             User.name,
             User.email,
             User.phone_num
+        ).select_from(
+            User
         ).join(
-            User.email == MyDepartment.user_email,
-        ).where(
-            MyDepartment.department_id == department_id
+            MyDepartment, User.email == MyDepartment.user_email,
         ).all()
+
+        response = []
+        for i in user_list:
+            response.append(
+                {
+                    'name': i.name,
+                    'email': i.email,
+                    'phone_num': i.phone_num
+                }
+            )
+
+        return {
+            'employee_list': response
+        }
 
 
 employ_list_impl = EmployListImpl()

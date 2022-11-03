@@ -19,6 +19,6 @@ _oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 @employee_router.get('/list')
 def get_employ_list(reqeust: EmployeeListRequest, token: str = Depends(_oauth2_scheme)):
     with session_scope() as session:
-        duc_admin_register(
+        return duc_admin_register(
             employ_list_impl, session, token, reqeust.department_id
         )
